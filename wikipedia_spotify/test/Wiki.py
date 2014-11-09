@@ -6,18 +6,18 @@ import sys
 print sys.path
 from Spotify import  vet_all_links
 
-
-def t(name):
+# Name-> List-of Links
+def check_wiki(name):
 	test = wikipedia.page(name)
 	print test.title
 	link = test.links
 	n = len(link)
 	print len(link)
 	#print test.categories
-	for i in range(n/2 , n/2+10):
+	#for i in range(n/2 , n/2+10):
 		#print link[i]
-		sys.stdout.write(link[i])
-		sys.stdout.write("\n")
+		#sys.stdout.write(link[i])
+		#sys.stdout.write("\n")
 	return link[0:n]
 
 
@@ -25,4 +25,4 @@ def t(name):
 #	name = sys.argv[1]
 #	a = t(name)
 
-print vet_all_links(t("Kanye West"))
+#print vet_all_links(check_wiki("Kanye West"))
