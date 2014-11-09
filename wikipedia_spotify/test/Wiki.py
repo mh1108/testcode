@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+__author__ = 'mdenker'
+
 import wikipedia
 import sys
 print sys.path
+from Spotify import  vet_all_links
 
 
 def t(name):
@@ -9,15 +13,16 @@ def t(name):
 	link = test.links
 	n = len(link)
 	print len(link)
-	print test.categories
+	#print test.categories
 	for i in range(n/2 , n/2+10):
 		#print link[i]
 		sys.stdout.write(link[i])
-		sys.stdout.write("\n") 
+		sys.stdout.write("\n")
 	return link[0:n]
 
-if __name__ == '__main__':
-	name = sys.argv[1]	
-	a = t(name)
-	#sys.exit(a)
-	
+
+#if __name__ == '__main__':
+#	name = sys.argv[1]
+#	a = t(name)
+
+print vet_all_links(t("Kanye West"))
