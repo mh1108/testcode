@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Cover Template for Bootstrap</title>
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="static/css/cover.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+        <div class="cover-container inner">
+
+    <nav class="navbar" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <h1>Title</h1>
+        </div>
+        <div class="row">
+        <div id="navbar">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+    <div class="input-group">
+      <form role="form">
+      <input type="text" class="form-control" name="artist" id="artist">
+      </form>
+      <span class="input-group-btn">
+        <button class="btn btn-default" id="search" type="button">Go!</button>
+      </span>
+    </div>
+  </div>
+  </div>
+    	</div>
+      </div>
+    </nav>
+          
+                    
+		  <div class="row">
+          <div class="col-lg-4 col-md-4 col-lg-offset-1 col-md-offset-1">
+              <p>Now Playing</p>
+              <p id="pp">Artist Name</p>
+              <iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe" frameborder="0" allowtransparency="true" id="playing"></iframe> 
+          </div>
+          <div class="col-lg-4 col-md-4col-lg-offset-2 col-md-offset-2" id="rec">
+          	  <p>Recommend</p>
+          	  <div class="search">Searching...</div>
+          	  <div class="result">
+              <a href="#" id="a_1">Artist Name</a>
+              <p id="in_1"></p><hr/>
+              <img src="" id="img_1" width="80" hight="80">
+              <hr/>
+              </div>
+              <div class="result">
+              <a href="#" id="a_2">Artist Name</a>
+              <p id="in_2"></p><hr/>
+              <img src="" id="img_2" width="80" hight="80">
+              <hr/>
+              </div> 
+              <div class="result">
+              <a href="#" id="a_3">Artist Name</a>
+              <p id="in_3"></p><hr/>
+              <img src="" id="img_3" width="80" hight="80">
+              </div> 
+          </div>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>team name</p>
+            </div>
+          </div>
+
+        </div>
+        </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+      $(function(){
+        $('#search').click(function(){
+
+          var artist=$("#artist").val();
+
+          $.ajax({
+              url:'/signUpUser',
+              data: $('form').serialize(),
+              type:'POST',
+              success: function(response){
+                var data = JSON.parse(response);
+                var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
+
+
+                $("#a_1").html(data.artist0.name);
+                var track="";
+                src = data.artist0.imageurl;
+                $("#img_1").attr("src",src);
+                for(var i=0;i<data.artist0.tracks.length;i++){
+                    var temp=data.artist0.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_1").attr('src',base+result);
+                $("#in_1").html(base+result).hide();
+
+
+
+                $("#a_2").html(data.artist1.name);
+                var track="";
+                src = data.artist1.imageurl;
+                $("#img_2").attr("src",src);
+                for(var i=0;i<data.artist1.tracks.length;i++){
+                    var temp=data.artist1.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_2").attr('src',base+result);
+                $("#in_2").html(base+result).hide();
+
+
+                $("#a_3").html(data.artist2.name);
+                var track="";
+                src = data.artist2.imageurl;
+                $("#img_3").attr("src",src);
+                for(var i=0;i<data.artist2.tracks.length;i++){
+                    var temp=data.artist2.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_3").attr('src',base+result);
+                $("#in_3").html(base+result).hide();
+
+                $('.result').show();
+                $('.search').hide();
+                console.log(response);
+              },
+              error: function(error){
+                console.log(error);
+              } 
+          });
+        });
+
+
+      $('#a_1').click(function(){
+        var source=$('#in_1').text();
+        $("#playing").attr('src',source);
+        $("#pp").html($("#a_1").text());
+        $('.result').hide();
+        $('.search').show();
+
+        $("#artist").val($("#a_1").text());
+        $.ajax({
+              url:'/signUpUser',
+              data: $('form').serialize(),
+              type:'POST',
+              success: function(response){
+                var data = JSON.parse(response);
+                var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
+
+
+                $("#a_1").html(data.artist0.name);
+                var track="";
+                src = data.artist0.imageurl;
+                $("#img_1").attr("src",src);
+                for(var i=0;i<data.artist0.tracks.length;i++){
+                    var temp=data.artist0.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_1").attr('src',base+result);
+                $("#in_1").html(base+result).hide();
+
+
+
+                $("#a_2").html(data.artist1.name);
+                var track="";
+                src = data.artist1.imageurl;
+
+                $("#img_2").attr("src",src);
+                for(var i=0;i<data.artist1.tracks.length;i++){
+                    var temp=data.artist1.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_2").attr('src',base+result);
+                $("#in_2").html(base+result).hide();
+
+
+                $("#a_3").html(data.artist2.name);
+                var track="";
+                src = data.artist2.imageurl;
+                $("#img_3").attr("src",src);
+                for(var i=0;i<data.artist2.tracks.length;i++){
+                    var temp=data.artist2.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_3").attr('src',base+result);
+                $("#in_3").html(base+result).hide();
+
+                $('.result').show();
+                $('.search').hide();
+                console.log(response);
+              },
+              error: function(error){
+                console.log(error);
+              } 
+          });
+      });
+      $('#a_2').click(function(){
+        var source=$('#in_2').text();
+        $("#playing").attr('src',source);
+        $("#pp").html($("#a_2").text());
+        $('.result').hide();
+        $('.search').show();
+        $("#artist").val($("#a_2").text());
+        $.ajax({
+              url:'/signUpUser',
+              data: $('form').serialize(),
+              type:'POST',
+              success: function(response){
+                var data = JSON.parse(response);
+                var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
+
+
+                $("#a_1").html(data.artist0.name);
+                var track="";
+                src = data.artist0.imageurl;
+                $("#img_1").attr("src",src);
+                for(var i=0;i<data.artist0.tracks.length;i++){
+                    var temp=data.artist0.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_1").attr('src',base+result);
+                $("#in_1").html(base+result).hide();
+
+
+
+                $("#a_2").html(data.artist1.name);
+                var track="";
+                src = data.artist1.imageurl;
+                $("#img_2").attr("src",src);
+                for(var i=0;i<data.artist1.tracks.length;i++){
+                    var temp=data.artist1.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_2").attr('src',base+result);
+                $("#in_2").html(base+result).hide();
+
+
+                $("#a_3").html(data.artist2.name);
+                var track="";
+                src = data.artist2.imageurl;
+                $("#img_3").attr("src",src);
+                for(var i=0;i<data.artist2.tracks.length;i++){
+                    var temp=data.artist2.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_3").attr('src',base+result);
+                $("#in_3").html(base+result).hide();
+
+                $('.result').show();
+                $('.search').hide();
+                console.log(response);
+              },
+              error: function(error){
+                console.log(error);
+              } 
+          });
+      });
+      $('#a_3').click(function(){
+        var source=$('#in_3').text();
+        $("#playing").attr('src',source);
+        $("#pp").html($("#a_3").text());
+        $('.result').hide();
+        $('.search').show();
+        $("#artist").val($("#a_3").text());
+        $.ajax({
+              url:'/signUpUser',
+              data: $('form').serialize(),
+              type:'POST',
+              success: function(response){
+                var data = JSON.parse(response);
+                var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
+
+
+                $("#a_1").html(data.artist0.name);
+                var track="";
+                src = data.artist0.imageurl;
+                $("#img_1").attr("src",src);
+                for(var i=0;i<data.artist0.tracks.length;i++){
+                    var temp=data.artist0.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_1").attr('src',base+result);
+                $("#in_1").html(base+result).hide();
+
+
+
+                $("#a_2").html(data.artist1.name);
+                var track="";
+                src = data.artist1.imageurl;
+                $("#img_2").attr("src",src);
+                for(var i=0;i<data.artist1.tracks.length;i++){
+                    var temp=data.artist1.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_2").attr('src',base+result);
+                $("#in_2").html(base+result).hide();
+
+
+                $("#a_3").html(data.artist2.name);
+                var track="";
+                src = data.artist2.imageurl;
+                $("#img_3").attr("src",src);
+                for(var i=0;i<data.artist2.tracks.length;i++){
+                    var temp=data.artist2.tracks[i];
+                    track+= String(temp).split(":")[2]+",";
+                }
+                var result=track.substring(0,track.length-1);
+                $("#recommend_3").attr('src',base+result);
+                $("#in_3").html(base+result).hide();
+
+                $('.result').show();
+                $('.search').hide();
+                console.log(response);
+              },
+              error: function(error){
+                console.log(error);
+              } 
+          });
+      });
+});
+    </script>
+</body>
+</html>
