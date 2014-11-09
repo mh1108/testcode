@@ -5,6 +5,7 @@ import wikipedia
 import sys
 import spotipy
 import math
+import re
 import random
 from bs4 import BeautifulSoup
 
@@ -65,8 +66,10 @@ def process_all(init_artist, artists):
 
 #arts1 = process_all("Mumford and Sons", ["Red Hot Chili Peppers", "linkin park", "bob dylan", "Taylor Swift"])
 
-#pick three artists from most to least related, based on given dictionary
-def pick_artists(artists):
+# String Dictionary -> Dictionary
+#pick three artists *outputted from most to least related*,
+# based on given dictionary and returns them with a string value of how they're related
+def pick_artists(init_artist, artists):
     length = len(artists)
 
     if length <= 3:
@@ -79,14 +82,26 @@ def pick_artists(artists):
 
         base = 0;
         top_artist = list_of_thirds[0][random.randint(0, third_len - 1)]
-        print top_artist
         mid_artist = list_of_thirds[1][random.randint(0, third_len - 1)]
-        print mid_artist
         length_last = len(list_of_thirds[0]) - 1
         bot_artist = list_of_thirds[2][random.randint(0, length_last)]
-        print bot_artist
 
-        return [top_artist, mid_artist, bot_artist]
+        top_sentence = find_sentence(init_artist, top_artist)
+        mid_sentence = find_sentence(init_artist, mid_artist)
+        bot_sentence = find_sentence(init_artist, bot_artist)
+
+        return {top_artist:top_sentence, mid_artist:mid_sentence,
+                    bot_artist:bot_sentence}
+
+
+def find_sentence(init_artist, one_artist):
+    wiki_body = wikipedia.page(init_artist).content
+    #next(right for right in link if right == init_artist)
+    sentences = re.findall("([^.]*?" + re.escape(one_artist) + "[^.]*\.)", wiki_body)
+    if not len(sentences):
+        return "no info available"
+    else:
+        return sentences[0]
 
 # list of artists -> shorter list of artists
 def random_pick(artists, r):
@@ -100,6 +115,8 @@ def random_pick(artists, r):
     return new_list
 
 
-#print pick_artists(arts1)
+print pick_artists("Foo Fighters", {"Nirvana":301, "Trent Reznor":21, "Red Hot Chili Peppers":1,
+                                    "deadmau5":20})
+
 
 
