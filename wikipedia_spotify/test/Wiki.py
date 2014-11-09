@@ -2,9 +2,12 @@
 __author__ = 'mdenker'
 
 import wikipedia
+
 import sys
+
+
 print sys.path
-from Spotify import  vet_all_links
+from Google import random_pick
 
 # Name-> List-of Links
 def check_wiki(name):
@@ -18,7 +21,7 @@ def check_wiki(name):
 		#print link[i]
 		#sys.stdout.write(link[i])
 		#sys.stdout.write("\n")
-	return link[0:n]
+	return random_pick(link, 20)
 
 
 #if __name__ == '__main__':

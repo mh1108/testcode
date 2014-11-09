@@ -1,6 +1,5 @@
 __author__ = 'mdenker'
 
-import random
 from Spotify import  vet_all_links
 from Wiki import check_wiki
 from Google import process_all

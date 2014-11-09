@@ -49,8 +49,8 @@ def showsome(searchfor):
 #output the dictionary of number of results matched with the artist from the list of artists
 def process_all(init_artist, artists):
 
-    if len(artists) > 20:
-        artists = artists[0:20]
+    if len(artists) > 5:
+        artists = random_pick(artists, 5)
 
     artists_dic = dict()
     for first_artist in artists:
@@ -63,9 +63,9 @@ def process_all(init_artist, artists):
 
 #Tests
 
-arts1 = process_all("Mumford and Sons", ["Red Hot Chili Peppers", "linkin park", "bob dylan", "Taylor Swift"])
+#arts1 = process_all("Mumford and Sons", ["Red Hot Chili Peppers", "linkin park", "bob dylan", "Taylor Swift"])
 
-#pick three artists based on given dictionary
+#pick three artists from most to least related, based on given dictionary
 def pick_artists(artists):
     length = len(artists)
 
@@ -88,7 +88,18 @@ def pick_artists(artists):
 
         return [top_artist, mid_artist, bot_artist]
 
+# list of artists -> shorter list of artists
+def random_pick(artists, r):
 
-print pick_artists(arts1)
+    length = len(artists)
+    new_list = list()
+    for i in range(0,r):
+        to_add = artists[random.randint(0, length)]
+        if not (to_add in new_list):
+            new_list.append(to_add)
+    return new_list
+
+
+#print pick_artists(arts1)
 
 
