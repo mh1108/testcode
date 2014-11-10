@@ -1,9 +1,5 @@
 import os
 from flask import Flask,render_template, request,json
-from Spotify import  vet_all_links
-from Wiki import check_wiki
-from Google import process_all
-from Google import pick_artists
 
 import spotipy
 import wikipedia
