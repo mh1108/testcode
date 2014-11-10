@@ -109,7 +109,7 @@ def random_pick(artists, r):
     length = len(artists)
     new_list = list()
     for i in range(0,r):
-        to_add = artists[random.randint(0, length)]
+        to_add = artists[random.randint(0, length-1)]
         if not (to_add in new_list):
             new_list.append(to_add)
     return new_list
