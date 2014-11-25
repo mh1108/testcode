@@ -92,6 +92,8 @@
           var artist=$("#artist").val();
 
           $(".search").show();
+          $(".result").hide();
+
           $.ajax({
             url:'/SearchforMainSinger',
             data: $('form').serialize(),
