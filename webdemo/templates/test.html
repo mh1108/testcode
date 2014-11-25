@@ -90,6 +90,7 @@
         $('#search').click(function(){
 
           var artist=$("#artist").val();
+          $(".search").html("Searching...");
 
           $(".search").show();
           $(".result").hide();
@@ -103,7 +104,7 @@
               var data = JSON.parse(response);
 
               if(!data.message){
-                alert("Artist" + artist +" Not found in Spotify");
+                alert("Artist " + artist +" Not found in Spotify");
                 return;
               }
 
@@ -131,10 +132,12 @@
                 var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
 
                 if(!data.message){
+                  alert("No related artists found in Spotify");
+                  $(".search").html("No related artists found in Spotify");
                   return;
                 }
 
-                $(".result").show();
+                
 
                 $("#a_1").html(data.artist0.name);
                 var track="";
@@ -190,6 +193,7 @@
         var source=$('#in_1').text();
         $("#playing").attr('src',source);
         $("#pp").html($("#a_1").text());
+        $(".search").html("Searching...");
         $('.result').hide();
         $('.search').show();
 
@@ -202,6 +206,11 @@
                 var data = JSON.parse(response);
                 var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
 
+                if(!data.message){
+                  alert("No related artists found in Spotify");
+                  $(".search").html("No related artists found in Spotify");
+                  return;
+                }
 
                 $("#a_1").html(data.artist0.name);
                 var track="";
@@ -256,6 +265,7 @@
         var source=$('#in_2').text();
         $("#playing").attr('src',source);
         $("#pp").html($("#a_2").text());
+        $(".search").html("Searching...");
         $('.result').hide();
         $('.search').show();
         $("#artist").val($("#a_2").text());
@@ -266,6 +276,13 @@
               success: function(response){
                 var data = JSON.parse(response);
                 var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
+
+
+                if(!data.message){
+                  alert("No related artists found in Spotify");
+                  $(".search").html("No related artists found in Spotify");
+                  return;
+                }
 
 
                 $("#a_1").html(data.artist0.name);
@@ -320,6 +337,7 @@
         var source=$('#in_3').text();
         $("#playing").attr('src',source);
         $("#pp").html($("#a_3").text());
+        $(".search").html("Searching...");
         $('.result').hide();
         $('.search').show();
         $("#artist").val($("#a_3").text());
@@ -331,6 +349,12 @@
                 var data = JSON.parse(response);
                 var base="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:";
 
+
+                if(!data.message){
+                  alert("No related artists found in Spotify");
+                  $(".search").html("No related artists found in Spotify");
+                  return;
+                }
 
                 $("#a_1").html(data.artist0.name);
                 var track="";

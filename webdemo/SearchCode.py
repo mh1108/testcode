@@ -47,6 +47,9 @@ class SearchCode(object):
 		if names is None:
 			total['message'] = False
 			return json.dumps(total)
+		if names == []:
+			total['message'] = False
+			return json.dumps(total)
 
 		total['message'] = True
 		m = 0
